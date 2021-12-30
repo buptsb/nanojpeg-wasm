@@ -8,6 +8,12 @@ Nanojpeg compiled WebAssembly for ServiceWorker, 10KiB size uncompressed.
 
 http://svn.emphy.de/nanojpeg
 
+## install
+
+```bash
+npm i --save nanojpeg-wasm
+```
+
 ## API
 
 ```TypeScript
