@@ -1,11 +1,25 @@
+let wasm;
+
+export async function loadWasm(fetchFn = fetch) {
+  try {
+    wasm = await WebAssembly.instantiateStreaming(fetchFn("nanojpeg.wasm"));
+  } catch(err) {
+    console.error(err);
+    throw new Error("Failed to load wasm module");
+  }
+}
+
 /**
  * Decode jpeg image
  * @param {ArrayBuffer} image 
  */
 export async function Decode(image) {
-  const wasm = await WebAssembly.instantiateStreaming(fetch("nanojpeg.wasm"));
+  if (!wasm) {
+    await loadWasm();
+  }
+
   const exports = wasm.instance.exports;
-  exports.memory.grow(2000); // each page is 64kb in size
+  exports.memory.grow(1000); // each page size is 64 KiB
   const heapu8 = new Uint8Array(exports.memory.buffer);
 
   const bufferSize = image.byteLength;
