@@ -1,5 +1,7 @@
 # nanojpeg-wasm
 
+[![CI](https://github.com/zckevin/nanojpeg-wasm/actions/workflows/test.yml/badge.svg)](https://github.com/zckevin/nanojpeg-wasm/actions/workflows/test.yml)
+
 Nanojpeg compiled WebAssembly for ServiceWorker, 10KiB size uncompressed.
 
 ## nanojpeg
