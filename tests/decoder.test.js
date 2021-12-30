@@ -28,7 +28,6 @@ describe("WasmDecoder and BrowserDecoder", () => {
     const wasmDecoded = getJpegChromaComponent(await Decode(imageAb));
     const browserDecoded = await BrowserDecoder.getJpegChromaComponent(imageAb);
 
-
     expect(wasmDecoded.length).toEqual(browserDecoded.length);
     // can't be exact same for different decoders
     for (let i = 0; i < wasmDecoded.length; i++) {
