@@ -34,4 +34,6 @@ Dependency:
 - [Bynaryen](https://github.com/WebAssembly/binaryen)
 - [Emscripten SDK](https://github.com/emscripten-core/emsdk)
 
+Dir /libc from https://github.com/harfbuzz/harfbuzzjs/tree/main/libc
+
 https://github.com/harfbuzz/harfbuzzjs/blob/main/nanojpeg/build.sh

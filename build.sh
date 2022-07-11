@@ -4,7 +4,7 @@
 
 clang \
     -Os \
-    ../libc/zephyr-string.c ../libc/malloc.cc ../libc/main.c \
+    ./libc/zephyr-string.c ./libc/malloc.cc ./libc/main.c \
     nanojpeg.c \
     --target=wasm32 -nostdlib -nostdinc \
     -Wno-builtin-requires-header \
@@ -24,5 +24,6 @@ clang \
     -Wl,--export=njGetImageSize \
     -Wl,--export=njDone \
     -Wl,--export=__heap_base \
-    -I../libc/include
-wasm-opt -Os a.out -o nanojpeg.wasm && rm a.out
+    -I./libc/include
+
+wasm-opt -Os a.out -o nanojpeg.wasm && rm a.out nanojpeg.c
