@@ -1,11 +1,29 @@
-let wasm;
+import { isNode } from "browser-or-node";
+import { loadWasmNodejs } from "./wasm-loader.node.js";
 
-export async function loadWasm(fetchFn = fetch) {
-  try {
-    wasm = await WebAssembly.instantiateStreaming(fetchFn("nanojpeg.wasm"));
-  } catch(err) {
-    console.error(err);
-    throw new Error("Failed to load wasm module");
+let wasm;
+let heapu8;
+
+async function initOnce() {
+  if (!wasm) {
+    const memory = new WebAssembly.Memory({
+      initial: 10, // 640KB
+      maximum: 1000,
+    });
+
+    if (!isNode) {
+      wasm = await WebAssembly.instantiateStreaming(
+        fetch("nanojpeg.wasm"),
+        { js: { mem: memory } }
+      );
+    } else {
+      wasm = await loadWasmNodejs(memory);
+    }
+
+    const exports = wasm.instance.exports;
+    // TODO: fix this
+    exports.memory.grow(1000); // each page size is 64 KiB
+    heapu8 = new Uint8Array(exports.memory.buffer);
   }
 }
 
@@ -14,16 +32,12 @@ export async function loadWasm(fetchFn = fetch) {
  * @param {ArrayBuffer} image 
  */
 export async function Decode(image) {
-  if (!wasm) {
-    await loadWasm();
-  }
-
-  const exports = wasm.instance.exports;
-  exports.memory.grow(1000); // each page size is 64 KiB
-  const heapu8 = new Uint8Array(exports.memory.buffer);
+  await initOnce();
 
   const bufferSize = image.byteLength;
+  const exports = wasm.instance.exports;
   const buffer = exports.malloc(bufferSize);
+  // console.log(buffer + bufferSize, heapu8.byteLength);
   heapu8.set(new Uint8Array(image), buffer);
 
   exports.njInit();
