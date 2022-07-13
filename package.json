@@ -1,6 +1,6 @@
 {
   "name": "nanojpeg-wasm",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "license": "MIT",
   "author": "Cong Zuo",
   "description": "10KiB WebAssembly-based JPEG encoder for ServiceWorker",
@@ -17,10 +17,11 @@
   "type": "module",
   "files": [
     "index.js",
-    "nanojpeg.wasm"
+    "nanojpeg.wasm",
+    "wasm-loader.node.js"
   ],
   "browser": {
-    "./wasm-loader.node.js": false
+    "wasm-loader.node.js": false
   },
   "scripts": {
     "test": "karma start ./karma.config.cjs --headless"
