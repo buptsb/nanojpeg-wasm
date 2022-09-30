@@ -20,6 +20,6 @@ jobs:
           node-version: '14'
           cache: 'npm'
       - run: npm ci
-      - run: npm run test:headless
+      - run: npm run test:karma:headless
       - run: npm run build
       - run: npm run test:jest
