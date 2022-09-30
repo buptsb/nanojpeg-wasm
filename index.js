@@ -1,5 +1,5 @@
-import { isNode } from "browser-or-node";
-import { loadWasmNodejs } from "./wasm-loader.node.js";
+const { isNode } = require("browser-or-node");
+const { loadWasmNodejs } = require("./wasm-loader.node.js");
 
 let wasm;
 let heapu8;
@@ -31,7 +31,7 @@ async function initOnce() {
  * Decode jpeg image
  * @param {ArrayBuffer} image 
  */
-export async function Decode(image) {
+async function Decode(image) {
   await initOnce();
 
   const bufferSize = image.byteLength;
@@ -56,4 +56,8 @@ export async function Decode(image) {
   exports.njDone();
   exports.free(exports.njGetImage());
   return result;
+}
+
+module.exports = {
+  Decode,
 }

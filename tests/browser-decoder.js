@@ -46,7 +46,7 @@ function RGB2Y(r, g, b) {
  * @param {number} height
  * @returns {Promise<Uint8ClampedArray>}
  */
-export async function getJpegChromaComponent(ab) {
+async function getJpegChromaComponent(ab) {
   const data = await decodeJpegInBrowser(ab);
   const length = data.length / 4;
 
@@ -59,4 +59,8 @@ export async function getJpegChromaComponent(ab) {
     chromaComponent[i] = RGB2Y(r, g, b);
   }
   return chromaComponent;
+}
+
+module.exports = {
+  getJpegChromaComponent,
 }

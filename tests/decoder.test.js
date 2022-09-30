@@ -1,10 +1,10 @@
-import { Decode } from "../index.js";
-import loadJpegForTesting from "./load-jpeg.js";
-import * as BrowserDecoder from "./browser-decoder.js"
+const { Decode } = require("../index.js");
+const loadJpegForTesting = require("./load-jpeg.js")
+const BrowserDecoder = require("./browser-decoder.js");
 
 // https://stackoverflow.com/a/14697130/671376
 function RGB2Y(r, g, b) {
-  return ((19595 * r + 38470 * g + 7471 * b ) >> 16);
+  return ((19595 * r + 38470 * g + 7471 * b) >> 16);
 }
 
 function getJpegChromaComponent(result) {
@@ -22,9 +22,8 @@ function getJpegChromaComponent(result) {
 }
 
 describe("WasmDecoder and BrowserDecoder", () => {
-  it("should produce same chroma component", async() => {
+  it("should produce same chroma component", async () => {
     const imageAb = await fetch(loadJpegForTesting()).then(r => r.arrayBuffer());
-
     const wasmDecoded = getJpegChromaComponent(await Decode(imageAb));
     const browserDecoded = await BrowserDecoder.getJpegChromaComponent(imageAb);
 
