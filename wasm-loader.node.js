@@ -1,10 +1,11 @@
 const fs = require("fs");
+const path = require("path");
 const wasmFilePath = require("./nanojpeg.wasm");
 
 async function loadWasmNodejs(memory) {
   try {
     return await WebAssembly.instantiate(
-      fs.readFileSync(wasmFilePath),
+      fs.readFileSync(path.join(__dirname, wasmFilePath.default)),
       { js: { mem: memory } }
     );
   } catch (err) {
