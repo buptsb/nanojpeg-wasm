@@ -1,6 +1,6 @@
 {
   "name": "nanojpeg-wasm",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "license": "MIT",
   "author": "Cong Zuo",
   "description": "10KiB WebAssembly-based JPEG encoder for ServiceWorker",
@@ -46,6 +46,7 @@
     "webpack-cli": "^4.10.0"
   },
   "dependencies": {
-    "browser-or-node": "^2.0.0"
+    "browser-or-node": "^2.0.0",
+    "debug": "^4.3.4"
   }
 }
